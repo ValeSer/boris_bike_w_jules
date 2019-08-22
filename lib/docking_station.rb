@@ -5,4 +5,3 @@ class DockingStation
     end
 
 end
-puts release_bike
