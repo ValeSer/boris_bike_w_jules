@@ -15,4 +15,13 @@ describe DockingStation do
     expect(DockingStation.new.release_bike.working?).to eq true
   end
 
+  it "check there is a method to dock the bike" do
+    is_expected.to respond_to(:dock_bike)
+  end
+
+  # it "check that the dock bike puts a bike in the array" do
+  #   station = DockingStation.new
+  #   bike = station.dock_bike
+  #   expect(?).to eq true
+  # end
 end
