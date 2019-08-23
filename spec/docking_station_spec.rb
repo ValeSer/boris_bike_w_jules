@@ -24,4 +24,11 @@ describe DockingStation do
     bike = Bike.new
     expect(station.dock_bike(bike)).to eq [bike]
   end
+
+  it 'checks if there is a bike available if not raises an error' do
+    station = DockingStation.new
+    if :bike_store.empty?
+    expect { station.release_bike }.to raise_error'No bikes available'
+  end
+end
 end
