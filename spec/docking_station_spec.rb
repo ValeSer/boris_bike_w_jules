@@ -19,9 +19,9 @@ describe DockingStation do
     is_expected.to respond_to(:dock_bike)
   end
 
-  # it "check that the dock bike puts a bike in the array" do
-  #   station = DockingStation.new
-  #   bike = station.dock_bike
-  #   expect(?).to eq true
-  # end
+  it "check that the dock bike puts a bike in the array" do
+    station = DockingStation.new
+    bike = Bike.new
+    expect(station.dock_bike(bike)).to eq [bike]
+  end
 end
