@@ -1,4 +1,6 @@
 class DockingStation
+  attr_reader :bike_store
+
   # this method will run every time without calling it
   def initialize
       @bike_store = []
