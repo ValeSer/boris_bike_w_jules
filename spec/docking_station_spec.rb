@@ -33,5 +33,19 @@ describe DockingStation do
     end
   end
 
+  context 'docking and releasing from storage' do
+    it 'releases the bike previously docked' do
+      bike = Bike.new
+      subject.dock_bike(bike)
+      released_bike = subject.release_bike
+      expect(released_bike).to eq bike
+    end
 
+    it 'eliminates the bike released' do
+      bike = Bike.new
+      subject.dock_bike(bike)
+      released_bike = subject.release_bike
+      expect(subject.bike_store.empty?).to eq true
+    end
+  end
 end
