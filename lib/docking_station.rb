@@ -11,8 +11,8 @@ class DockingStation
     @bikes.pop
   end
 
-  def dock_bike(bike)
-    raise 'Sorry, station is full' if !@bikes.empty?
+  def dock(bike)
+    raise 'Sorry, station is full' if @bikes.count >= 20
     @bikes << bike
   end
 end
