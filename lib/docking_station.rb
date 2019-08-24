@@ -1,18 +1,18 @@
 class DockingStation
-  attr_reader :bike_store
+  attr_reader :bikes
 
   # this method will run every time without calling it
   def initialize
-    @bike_store = []
+    @bikes = []
   end
 
   def release_bike
-    raise 'Sorry, no bikes available' if @bike_store.empty?
-    @bike_store.pop
+    raise 'Sorry, no bikes available' if @bikes.empty?
+    @bikes.pop
   end
 
   def dock_bike(bike)
-    raise 'Sorry, station is full' if !@bike_store.empty?
-    @bike_store << bike
+    raise 'Sorry, station is full' if !@bikes.empty?
+    @bikes << bike
   end
 end

@@ -24,7 +24,7 @@ describe DockingStation do
     it "check that dock_bike saves the bike" do
       bike = Bike.new
       subject.dock_bike(bike)
-      expect(subject.bike_store).to include(bike)
+      expect(subject.bikes).to include(bike)
     end
 
     it 'throws an error if there is a bike in the Docking station' do
@@ -45,7 +45,7 @@ describe DockingStation do
       bike = Bike.new
       subject.dock_bike(bike)
       released_bike = subject.release_bike
-      expect(subject.bike_store.empty?).to eq true
+      expect(subject.bikes.empty?).to eq true
     end
   end
 end
