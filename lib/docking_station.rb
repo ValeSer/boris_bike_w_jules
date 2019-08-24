@@ -3,22 +3,17 @@ class DockingStation
 
   # this method will run every time without calling it
   def initialize
-      @bike_store = []
+    @bike_store = []
   end
 
   def release_bike
-    # fail @bike_store.empty?
-    fail "No bikes available" unless @bike
-    @bike
+    if @bike_store.empty?
+      raise 'Sorry, no bikes available'
+    end
+    Bike.new
   end
 
-  def dock(bike)
+  def dock_bike(bike)
     @bike_store << bike
   end
-end
-
-class Bike
-    def working?
-      true
-    end
 end

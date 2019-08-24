@@ -1,7 +1,9 @@
-require "docking_station"
+require "bike"
 
 describe Bike do
-  it "Does the bike class respond to the method working?" do
-    is_expected.to respond_to(:working?)
-  end
+  it { is_expected.to respond_to :working? }
 end
+
+# it "gets a bike 2 the less readable version" do
+#   expect(DockingStation.new.release_bike.working?).to eq true
+# end
