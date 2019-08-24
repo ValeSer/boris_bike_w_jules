@@ -7,13 +7,12 @@ class DockingStation
   end
 
   def release_bike
-    if @bike_store.empty?
-      raise 'Sorry, no bikes available'
-    end
+    raise 'Sorry, no bikes available' if @bike_store.empty?
     Bike.new
   end
 
   def dock_bike(bike)
+    raise 'Sorry, station is full' if !@bike_store.empty?
     @bike_store << bike
   end
 end

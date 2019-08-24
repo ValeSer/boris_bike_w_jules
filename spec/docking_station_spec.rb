@@ -26,6 +26,12 @@ describe DockingStation do
       subject.dock_bike(bike)
       expect(subject.bike_store).to include(bike)
     end
+
+    it 'throws an error if there is a bike in the Docking station' do
+      subject.dock_bike(Bike.new)
+      expect { subject.dock_bike(Bike.new) }.to raise_error 'Sorry, station is full'
+    end
   end
+
 
 end
