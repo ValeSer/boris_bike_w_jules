@@ -1,9 +1,10 @@
 class DockingStation
-  attr_reader :bikes
+  attr_reader :bikes, :capacity
   DEFAULT_CAPACITY = 20
 
   # this method will run every time without calling it
-  def initialize
+  def initialize(capacity = DEFAULT_CAPACITY)
+    @capacity = capacity
     @bikes = []
   end
 
@@ -20,7 +21,7 @@ class DockingStation
   private
 
   def full?
-    @bikes.count >= DEFAULT_CAPACITY
+    @bikes.count >= @capacity
   end
 
   def empty?
