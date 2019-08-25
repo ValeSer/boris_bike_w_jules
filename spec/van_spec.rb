@@ -46,4 +46,6 @@ describe Van do
        expect(van.capacity).to eq Van::DEFAULT_CAPACITY
     end
   end
+
+
 end
