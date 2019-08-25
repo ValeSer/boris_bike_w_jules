@@ -19,6 +19,10 @@ class Garage
     @bikes.delete(available_bikes[0])
   end
 
+  def are_there_working_bikes?
+    working_bikes.any?
+  end
+
   private
 
   def full?

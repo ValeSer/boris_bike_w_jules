@@ -14,6 +14,19 @@ class Van
     end
   end
 
+  def collect_from_garage(garage)
+    while !full? && garage.are_there_working_bikes? do
+      @bikes << garage.release_bike
+    end
+  end
+
+  def release_into_station(docking_station)
+    while are_there_working_bikes? do
+      bike = working_bikes[0]
+      docking_station.dock(@bikes.delete(bike))
+    end
+  end
+
   def release_into_garage(garage)
     while are_there_broken_bikes? do
       bike = broken_bikes[0]
@@ -25,6 +38,10 @@ class Van
     broken_bikes.any?
   end
 
+  def are_there_working_bikes?
+    working_bikes.any?
+  end
+
   private
 
   def full?
@@ -33,6 +50,10 @@ class Van
 
   def empty?
     @bikes.empty?
+  end
+
+  def working_bikes
+    @bikes.select(&:working?)
   end
 
   def broken_bikes
