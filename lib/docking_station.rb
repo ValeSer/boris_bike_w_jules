@@ -15,6 +15,7 @@ class DockingStation
     @bikes.delete(available_bikes[0])
   end
 
+  # dock "parks" a bike
   def dock(bike, is_broken = false)
     raise 'Sorry, station is full' if full?
     bike.broken if is_broken

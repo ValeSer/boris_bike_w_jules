@@ -1,14 +1,16 @@
 require 'docking_station'
 
 describe DockingStation do
+  let(:bike) { double(:bike, :working? => true) }
+  let(:broken_bike) { double(:bike, :broken => nil, :working? => false) }
   it { is_expected.to respond_to :release_bike }
   it { is_expected.to respond_to :dock }
 
   context '#release_bike' do
     it "releases a bike" do
-      subject.dock double(:bike)
-      bike = subject.release_bike
-      expect(bike.working?).to eq true
+      subject.dock(bike)
+      released_bike = subject.release_bike
+      expect(released_bike.working?).to eq true
     end
 
     it 'throws an error if there is no bike in the Docking station' do
@@ -16,47 +18,40 @@ describe DockingStation do
     end
 
     it 'does not release broken bikes' do
-      bike = double(:bike)
-      # it is also possible => bike.broken
-      subject.dock(bike, true)
+      subject.dock(broken_bike)
       expect { subject.release_bike }.to raise_error 'Sorry, no bikes available'
     end
+
     it 'release a working bike' do
-      bike1 = double(:bike)
-      bike2 = double(:bike)
-      bike3 = double(:bike)
-      subject.dock(bike1, true)
-      subject.dock(bike2)
-      subject.dock(bike3, true)
-      bike = subject.release_bike
-      expect(bike.working?).to eq true
+      subject.dock(broken_bike)
+      subject.dock(bike)
+      subject.dock(broken_bike)
+      released_bike = subject.release_bike
+      expect(released_bike.working?).to eq true
     end
   end
 
   context '#dock' do
     it "check that dock saves the bike" do
-      bike = double(:bike)
       subject.dock(bike)
       expect(subject.bikes).to include(bike)
     end
 
     it "takes a broken bike" do
-      bike = double(:bike)
+      allow(bike).to receive(:broken)
       subject.dock(bike, true)
       expect(subject.bikes).to include(bike)
-      expect(bike.working?).to be false
+      expect(bike).to have_received(:broken)
     end
 
     it 'takes already broken bikes' do
-      bike = double(:bike)
-      bike.broken
-      subject.dock(bike)
-      expect(subject.bikes).to include(bike)
+      subject.dock(broken_bike)
+      expect(subject.bikes).to include(broken_bike)
     end
 
     it 'throws an error if there are already 20 bikes in the Docking station' do
       DockingStation::DEFAULT_CAPACITY.times { subject.dock(double(:bike)) }
-      expect { subject.dock(double(:bike)) }.to raise_error 'Sorry, station is full'
+      expect { subject.dock(bike) }.to raise_error 'Sorry, station is full'
     end
 
     it 'throws an error if the limit defined by the user has been reached' do
@@ -70,14 +65,12 @@ describe DockingStation do
 
   context 'docking and releasing from storage' do
     it 'releases the bike previously docked' do
-      bike = double(:bike)
       subject.dock(bike)
       released_bike = subject.release_bike
       expect(released_bike).to eq bike
     end
 
     it 'eliminates the bike released' do
-      bike = double(:bike)
       subject.dock(bike)
       released_bike = subject.release_bike
       expect(subject.bikes.empty?).to eq true
