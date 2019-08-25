@@ -3,10 +3,12 @@ require 'garage'
 describe Garage do
   subject(:garage) { Garage.new }
   let(:bike) { double(:bike, :working? => true) }
-  let(:broken_bike) { double(:bike, :broken => nil, :working? => false) }
+  let(:broken_bike) { double(:bike, :broken => nil, :working? => false, :fix => nil) }
 
   it { is_expected.to respond_to :release_bike }
   it { is_expected.to respond_to :dock }
+  it { is_expected.to respond_to :fix_bikes }
+  it { is_expected.to respond_to :are_there_working_bikes? }
 
   context '#dock' do
 
@@ -50,6 +52,17 @@ describe Garage do
       garage.dock(broken_bike)
       released_bike = garage.release_bike
       expect(released_bike.working?).to eq true
+    end
+  end
+
+  context '#fix_bikes' do
+    it 'fixes all broken bikes' do
+      broken_bike2 = double(:bike, :broken => nil, :working? => false, :fix => nil);
+      garage.dock(broken_bike)
+      garage.dock(broken_bike2)
+      garage.fix_bikes
+      expect(broken_bike).to have_received(:fix)
+      expect(broken_bike2).to have_received(:fix)
     end
   end
 

@@ -23,6 +23,10 @@ class Garage
     working_bikes.any?
   end
 
+  def fix_bikes
+    broken_bikes.map(&:fix)
+  end
+
   private
 
   def full?
@@ -35,5 +39,9 @@ class Garage
 
   def working_bikes
     @bikes.select(&:working?)
+  end
+
+  def broken_bikes
+    @bikes.reject(&:working?)
   end
 end
