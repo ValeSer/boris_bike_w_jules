@@ -5,6 +5,8 @@ describe DockingStation do
   let(:broken_bike) { double(:bike, :broken => nil, :working? => false) }
   it { is_expected.to respond_to :release_bike }
   it { is_expected.to respond_to :dock }
+  it { is_expected.to respond_to :release_broken_bike }
+  it { is_expected.to respond_to :are_there_broken_bikes? }
 
   context '#release_bike' do
     it "releases a bike" do
@@ -87,4 +89,42 @@ describe DockingStation do
        expect(subject.capacity).to eq DockingStation::DEFAULT_CAPACITY
     end
   end
+
+  context '#release_broken_bike' do
+    it "releases a broken bike" do
+      subject.dock(broken_bike)
+      released_bike = subject.release_broken_bike
+      expect(released_bike.working?).to eq false
+    end
+
+    it 'throws an error if there is no bike in the Docking station' do
+      expect { subject.release_broken_bike }.to raise_error 'Sorry, station is empty'
+    end
+
+    it 'does not release working bikes' do
+      subject.dock(bike)
+      expect { subject.release_broken_bike }.to raise_error 'Sorry, no bikes available'
+    end
+
+    it 'release a broken bike' do
+      subject.dock(bike)
+      subject.dock(broken_bike)
+      subject.dock(bike)
+      released_bike = subject.release_broken_bike
+      expect(released_bike.working?).to eq false
+    end
+  end
+
+  context '#are_there_broken_bikes?' do
+    it 'true if there is a broken bike' do
+      subject.dock(broken_bike)
+      expect(subject.are_there_broken_bikes?).to eq true
+    end
+
+    it 'false if there are no broken bikes' do
+      subject.dock(bike)
+      expect(subject.are_there_broken_bikes?).to eq false
+    end
+  end
+
 end
