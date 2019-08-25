@@ -47,6 +47,13 @@ describe DockingStation do
       expect(bike.working?).to be false
     end
 
+    it 'takes already broken bikes' do
+      bike = Bike.new
+      bike.broken
+      subject.dock(bike)
+      expect(subject.bikes).to include(bike)
+    end
+
     it 'throws an error if there are already 20 bikes in the Docking station' do
       DockingStation::DEFAULT_CAPACITY.times { subject.dock(Bike.new) }
       expect { subject.dock(Bike.new) }.to raise_error 'Sorry, station is full'
