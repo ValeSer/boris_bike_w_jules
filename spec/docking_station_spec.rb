@@ -23,6 +23,13 @@ describe DockingStation do
       expect(subject.bikes).to include(bike)
     end
 
+    it "takes a broken bike" do
+      bike = Bike.new
+      subject.dock(bike, true)
+      expect(subject.bikes).to include(bike)
+      expect(bike.working?).to be false
+    end
+
     it 'throws an error if there are already 20 bikes in the Docking station' do
       DockingStation::DEFAULT_CAPACITY.times { subject.dock(Bike.new) }
       expect { subject.dock(Bike.new) }.to raise_error 'Sorry, station is full'
@@ -34,6 +41,7 @@ describe DockingStation do
       capacity.times { station.dock(Bike.new) }
       expect { station.dock(Bike.new) }.to raise_error 'Sorry, station is full'
     end
+
   end
 
   context 'docking and releasing from storage' do
@@ -51,7 +59,7 @@ describe DockingStation do
       expect(subject.bikes.empty?).to eq true
     end
   end
-  
+
   context '@capacity' do
     it 'allows a user to set a @capacity instance variable when DockingStation.new is called' do
       capacity = 2

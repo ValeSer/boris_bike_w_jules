@@ -13,8 +13,9 @@ class DockingStation
     @bikes.pop
   end
 
-  def dock(bike)
+  def dock(bike, is_broken = false)
     raise 'Sorry, station is full' if full?
+    bike.broken if is_broken
     @bikes << bike
   end
 
