@@ -6,7 +6,7 @@ describe DockingStation do
 
   context '#release_bike' do
     it "releases a bike" do
-      subject.dock(Bike.new)
+      subject.dock double(:bike)
       bike = subject.release_bike
       expect(bike.working?).to eq true
     end
@@ -16,15 +16,15 @@ describe DockingStation do
     end
 
     it 'does not release broken bikes' do
-      bike = Bike.new
+      bike = double(:bike)
       # it is also possible => bike.broken
       subject.dock(bike, true)
       expect { subject.release_bike }.to raise_error 'Sorry, no bikes available'
     end
     it 'release a working bike' do
-      bike1 = Bike.new
-      bike2 = Bike.new
-      bike3 = Bike.new
+      bike1 = double(:bike)
+      bike2 = double(:bike)
+      bike3 = double(:bike)
       subject.dock(bike1, true)
       subject.dock(bike2)
       subject.dock(bike3, true)
@@ -35,49 +35,49 @@ describe DockingStation do
 
   context '#dock' do
     it "check that dock saves the bike" do
-      bike = Bike.new
+      bike = double(:bike)
       subject.dock(bike)
       expect(subject.bikes).to include(bike)
     end
 
     it "takes a broken bike" do
-      bike = Bike.new
+      bike = double(:bike)
       subject.dock(bike, true)
       expect(subject.bikes).to include(bike)
       expect(bike.working?).to be false
     end
 
     it 'takes already broken bikes' do
-      bike = Bike.new
+      bike = double(:bike)
       bike.broken
       subject.dock(bike)
       expect(subject.bikes).to include(bike)
     end
 
     it 'throws an error if there are already 20 bikes in the Docking station' do
-      DockingStation::DEFAULT_CAPACITY.times { subject.dock(Bike.new) }
-      expect { subject.dock(Bike.new) }.to raise_error 'Sorry, station is full'
+      DockingStation::DEFAULT_CAPACITY.times { subject.dock(double(:bike)) }
+      expect { subject.dock(double(:bike)) }.to raise_error 'Sorry, station is full'
     end
 
     it 'throws an error if the limit defined by the user has been reached' do
       capacity = 2
       station = DockingStation.new(capacity)
-      capacity.times { station.dock(Bike.new) }
-      expect { station.dock(Bike.new) }.to raise_error 'Sorry, station is full'
+      capacity.times { station.dock(double(:bike)) }
+      expect { station.dock(double(:bike)) }.to raise_error 'Sorry, station is full'
     end
 
   end
 
   context 'docking and releasing from storage' do
     it 'releases the bike previously docked' do
-      bike = Bike.new
+      bike = double(:bike)
       subject.dock(bike)
       released_bike = subject.release_bike
       expect(released_bike).to eq bike
     end
 
     it 'eliminates the bike released' do
-      bike = Bike.new
+      bike = double(:bike)
       subject.dock(bike)
       released_bike = subject.release_bike
       expect(subject.bikes.empty?).to eq true
