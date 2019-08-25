@@ -3,9 +3,12 @@ require 'van'
 describe Van do
   subject(:van) { Van.new }
   let(:docking_station) { double(:docking_station) }
+  let(:garage) { double(:garage, :dock => nil) }
+  let(:bike) { double(:bike, :working? => true) }
   let(:broken_bike) { double(:bike, :broken => nil, :working? => false) }
 
   it { is_expected.to respond_to :collect_from_station }
+  it { is_expected.to respond_to :release_into_garage }
 
   context '#collect_from_station' do
     it 'collects a broken bike' do
@@ -47,5 +50,20 @@ describe Van do
     end
   end
 
+  context '#release_into_garage' do
+    it 'unloads all bikes' do
+      van.bikes << broken_bike
+      van.bikes << broken_bike
+      van.release_into_garage(garage)
+      expect(van.bikes.empty?).to be true
+    end
+
+    it 'unloads only broken bikes' do
+      van.bikes << broken_bike
+      van.bikes << bike
+      van.release_into_garage(garage)
+      expect(van.bikes).to include bike
+    end
+  end
 
 end

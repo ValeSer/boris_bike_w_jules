@@ -14,9 +14,28 @@ class Van
     end
   end
 
+  def release_into_garage(garage)
+    while are_there_broken_bikes? do
+      bike = broken_bikes[0]
+      garage.dock(@bikes.delete(bike))
+    end
+  end
+
+  def are_there_broken_bikes?
+    broken_bikes.any?
+  end
+
   private
 
   def full?
     @bikes.count >= @capacity
+  end
+
+  def empty?
+    @bikes.empty?
+  end
+
+  def broken_bikes
+    @bikes.reject(&:working?)
   end
 end
