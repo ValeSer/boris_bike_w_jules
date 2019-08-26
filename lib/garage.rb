@@ -1,11 +1,6 @@
 class Garage
+  include BikeContainer
   attr_reader :bikes
-  DEFAULT_CAPACITY = 200
-
-  def initialize(capacity = DEFAULT_CAPACITY)
-    @bikes = []
-    @capacity = capacity
-  end
 
   def dock(bike)
     raise 'Sorry, garage is full' if full?

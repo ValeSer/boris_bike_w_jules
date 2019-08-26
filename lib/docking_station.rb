@@ -1,12 +1,7 @@
 class DockingStation
-  attr_reader :bikes, :capacity
-  DEFAULT_CAPACITY = 20
+  include BikeContainer
 
-  # this method will run every time without calling it
-  def initialize(capacity = DEFAULT_CAPACITY)
-    @capacity = capacity
-    @bikes = []
-  end
+  attr_reader :bikes
 
   def release_bike
     raise 'Sorry, station is empty' if empty?

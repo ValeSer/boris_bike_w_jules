@@ -1,6 +1,8 @@
 require 'van'
 
 describe Van do
+  it_behaves_like BikeContainer
+
   subject(:van) { Van.new }
   let(:docking_station) { double(:docking_station, :dock => nil) }
   let(:garage) { double(:garage, :dock => nil) }
@@ -68,17 +70,6 @@ describe Van do
       allow(garage).to receive(:are_there_working_bikes?).and_return(true)
       van.collect_from_garage(garage)
       expect(van.bikes.count).to eq van.capacity
-    end
-  end
-
-  context '@capacity' do
-    it 'allows a user to set a @capacity instance variable when Van.new is called' do
-      capacity = 2
-      van = Van.new(capacity)
-      expect(van.capacity).to eq capacity
-    end
-    it 'takes DEFAULT_CAPACITY if none is given' do
-       expect(van.capacity).to eq Van::DEFAULT_CAPACITY
     end
   end
 

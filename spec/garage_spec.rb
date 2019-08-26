@@ -1,6 +1,8 @@
 require 'garage'
 
 describe Garage do
+  it_behaves_like BikeContainer
+
   subject(:garage) { Garage.new }
   let(:bike) { double(:bike, :working? => true) }
   let(:broken_bike) { double(:bike, :broken => nil, :working? => false, :fix => nil) }
@@ -15,18 +17,6 @@ describe Garage do
     it 'takes already broken bikes' do
       garage.dock(broken_bike)
       expect(garage.bikes).to include(broken_bike)
-    end
-
-    it 'throws an error if the garage is full' do
-      Garage::DEFAULT_CAPACITY.times { garage.dock(double(:bike)) }
-      expect { garage.dock(broken_bike) }.to raise_error 'Sorry, garage is full'
-    end
-
-    it 'throws an error if the limit defined by the user has been reached' do
-      capacity = 2
-      garage = Garage.new(capacity)
-      capacity.times { garage.dock(double(:bike)) }
-      expect { garage.dock(broken_bike) }.to raise_error 'Sorry, garage is full'
     end
   end
 

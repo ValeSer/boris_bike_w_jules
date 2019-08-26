@@ -1,12 +1,7 @@
 class Van
-  attr_reader :bikes
-  attr_reader :capacity
-  DEFAULT_CAPACITY = 20
+  include BikeContainer
 
-  def initialize(capacity = DEFAULT_CAPACITY)
-    @bikes = []
-    @capacity = capacity
-  end
+  attr_reader :bikes
 
   def collect_from_station(docking_station)
     while !full? && docking_station.are_there_broken_bikes? do

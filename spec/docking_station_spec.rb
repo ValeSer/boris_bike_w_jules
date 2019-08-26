@@ -1,6 +1,8 @@
 require 'docking_station'
 
 describe DockingStation do
+  it_behaves_like BikeContainer
+
   let(:bike) { double(:bike, :working? => true) }
   let(:broken_bike) { double(:bike, :broken => nil, :working? => false) }
   it { is_expected.to respond_to :release_bike }
@@ -76,17 +78,6 @@ describe DockingStation do
       subject.dock(bike)
       released_bike = subject.release_bike
       expect(subject.bikes.empty?).to eq true
-    end
-  end
-
-  context '@capacity' do
-    it 'allows a user to set a @capacity instance variable when DockingStation.new is called' do
-      capacity = 2
-      station = DockingStation.new(capacity)
-      expect(station.capacity).to eq capacity
-    end
-    it 'takes DEFAULT_CAPACITY if none is given' do
-       expect(subject.capacity).to eq DockingStation::DEFAULT_CAPACITY
     end
   end
 
