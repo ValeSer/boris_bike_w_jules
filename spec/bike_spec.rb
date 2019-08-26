@@ -1,11 +1,11 @@
-require "bike"
+require 'bike'
 
 describe Bike do
   it { is_expected.to respond_to :working? }
   it { is_expected.to respond_to :broken }
   it { is_expected.to respond_to :fix }
 
-  it "reports a broken bike" do
+  it 'reports a broken bike' do
     subject.broken
     expect(subject.working?).to be false
   end
@@ -15,10 +15,4 @@ describe Bike do
     subject.fix
     expect(subject.working?).to be true
   end
-
 end
-
-
-# it "gets a bike 2 the less readable version" do
-#   expect(DockingStation.new.release_bike.working?).to eq true
-# end

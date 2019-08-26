@@ -14,7 +14,6 @@ describe Van do
   it { is_expected.to respond_to :collect_from_garage }
   it { is_expected.to respond_to :release_into_garage }
 
-
   context '#collect_from_station' do
     it 'collects a broken bike' do
       allow(docking_station).to receive(:release_broken_bike).and_return(broken_bike)
